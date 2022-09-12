@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- load the properties file: sport.properties -->
+	<context:property-placeholder location="classpath:sport.properties" />
+	
+	<!-- Define your beans here -->
+	<!-- define the dependency -->
+
+	<bean id="myCoachA" class="com.spring.xml.BaseballCoach">
+		<!-- set up contructor injection-->
+		<constructor-arg ref="myFortuneB" />
+	</bean>
+
+	<bean id="myCoachB" class="com.spring.xml.TrackCoach">
+		<!-- set up contructor injection-->
+		<constructor-arg ref="myFortuneA" />
+	</bean>
+
+	<bean id="myCoachC" class="com.spring.xml.TejoCoach">
+		<!-- set up setter method injection-->
+		<!-- will call setFortuneService (set + name attribute)-->
+		<property name="fortuneService" ref="myFortuneC" />
+
+		<!-- will call setEmailAddress (set + name emailAddress)-->
+		<property name="emailAddress" value="${foo.email}" />
+		<property name="team" value="${foo.team}" />
+
+	</bean>
+
+	<bean id="myFortuneA" class="com.spring.xml.HappyFortuneService"></bean>
+
+	<bean id="myFortuneB" class="com.spring.xml.SadFortuneService"></bean>
+	
+	<bean id="myFortuneC" class="com.spring.xml.RandomFortuneService"></bean>
+
+</beans>
